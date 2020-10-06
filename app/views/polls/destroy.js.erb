@@ -1,0 +1,5 @@
+$('#poll-global').effect('highlight', {}, 500, function() {
+  $(this).children('#edit_poll_<%= @poll.id %>').effect('highlight', {}, 500, function() {
+    $(this).remove();
+  })
+});

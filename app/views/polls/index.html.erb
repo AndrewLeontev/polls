@@ -1,0 +1,27 @@
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'voting', :plugin => 'polls' %>
+<% end %>
+<div id="notice"></div>
+<h2><%= l(:label_polls) %></h2>
+
+<% if User.current.global_permission_to?(:manage_polls) %>
+  <div class="poll-menu">
+    <%= link_to "<span>#{l(:button_polls_new)}</span>".html_safe, { controller: 'polls', action: 'new' }, class: 'rm-icon fa-plus in_link link_to_modal refreshable', remote: true %>
+    <%= link_to l(:button_polls_report), { action: 'report' }, class: 'rm-icon fa-bar-chart' %>
+  </div>
+<% end %>
+
+<div id="polls-errors"></div>
+<div class="mmp-scroll">
+  <table class="list polls-table">
+    <thead></thead>
+    <tbody class="polls-tbody" id="poll-global">
+      <% @polls.each do |poll| %>
+        <%= render partial: 'poll', locals: {poll: poll} %>
+      <% end %>
+    </tbody>
+  </table>
+  <div id="polls_pag"><span class="pagination"><%= pagination_links_full @paginator, @count %></span></div>
+</div>
+
+

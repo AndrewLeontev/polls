@@ -1,0 +1,59 @@
+<% global_p = nil  %>
+<% total_y, total_n = 0, 0  %>
+<% polls.each do |poll| %>
+  <% if global_p.nil? %>
+
+    <% global_p = poll.question  %>
+    <tr>
+      <td class="question" colspan="5"><%= poll['question'] %></td>
+    </tr>
+
+    <tr>
+      <td colspan="3"><span class="poll-report-user" ><%= link_to_user(poll) %></span></td>
+      <td class="center-align"><%= '✔' if poll["answ"] == 1%></td>
+      <td class="center-align"><%= '✔' unless poll["answ"] == 1%></td>
+    </tr>
+
+    <%  poll["answ"]  == 1 ? total_y += 1 : total_n += 1%>
+
+  <% elsif global_p != poll.question %>
+    <% global_p = poll.question  %>
+
+    <tr class="global-poll totals" >
+      <td colspan="3"><%= l(:label_total) %></td>
+      <td class="center-align"><%= total_y %></td>
+      <td class="center-align"><%= total_n %></td>
+    </tr>
+
+    <% total_y, total_n = 0, 0 %>
+
+    <%  poll["answ"]  == 1 ? total_y += 1 : total_n += 1%>
+
+    <tr class="global-poll">
+      <td class="question" colspan="5"><%= poll['question'] %></td>
+    </tr>
+
+    <tr>
+      <td colspan="3"><span class="poll-report-user" ><%= link_to_user(poll) %></span></td>
+      <td class="center-align"><%= '✔' if poll["answ"] == 1%></td>
+      <td class="center-align"><%= '✔' unless poll["answ"] == 1%></td>
+    </tr>
+
+  <% else %>
+    <tr>
+      <td colspan="3"><span class="poll-report-user" ><%= link_to_user(poll) %></span></td>
+      <td class="center-align"><%= '✔' if poll["answ"] == 1%></td>
+      <td class="center-align"><%= '✔' unless poll["answ"] == 1%></td>
+    </tr>
+
+    <%  poll["answ"]  == 1 ? total_y += 1 : total_n += 1%>
+
+  <% end %>
+
+<% end %>
+
+<tr class="global-poll totals" >
+  <td colspan="3"><%= l(:label_total) %></td>
+  <td class="center-align"><%= total_y %></td>
+  <td class="center-align"><%= total_n %></td>
+</tr>

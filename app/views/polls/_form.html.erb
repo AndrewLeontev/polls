@@ -1,0 +1,6 @@
+<div id="modal" class="modal-form">
+  <%= form_for @poll, remote: true do |f| %>
+    <%= f.text_field :question %>
+    <%= f.submit l(:button_save) %>
+  <% end %>
+</div>

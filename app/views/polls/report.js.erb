@@ -1,0 +1,5 @@
+$('#poll_tree').effect('highlight', {} , 500, function() {
+  $(this).children().remove()
+  $(this).append('<%= j render partial: 'report', locals: {polls: @polls} %>')
+  $(this).children().effect('highlight')
+})

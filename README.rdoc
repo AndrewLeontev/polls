@@ -1,0 +1,7 @@
+Redmine Polls Plugin
+
+1. download archive
+2. unpack archive in to /redmine/plugins/
+3. run `bundle install`
+4. run `rake redmine:plugins:migrate`
+5. restart apache/etc

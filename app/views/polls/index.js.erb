@@ -1,0 +1,14 @@
+$('#errorExplanation').remove();
+$('.flash').remove();
+$('.modal_window').modal_window('hide');
+
+$('#polls_pag').children('.pagination').remove()
+$('#polls_pag').append('<span class="pagination"><%= pagination_links_full @paginator, @count %></span>')
+
+<% if @poll.present? && @poll.errors.present? %>
+  $('#polls-errors').prepend('<%= escape_javascript(error_messages_for(@poll)) %>');
+<% else %>
+  $('#poll-global').children('#edit_poll_<%= @poll.id %>').replaceWith('<%= j render @poll %>')
+  $('#poll-global').children('#edit_poll_<%= @poll.id %>').effect('highlight', 500)
+<% end %>
+

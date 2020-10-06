@@ -1,0 +1,39 @@
+<tr class="poll-tbody" id="edit_poll_<%= poll.id %>">
+  <td id="question_poll_<%= poll.id %>">
+    <%= poll.question %>
+  </td>
+
+  <td class="actions">
+    <% if poll.voted?(User.current.id) %>
+
+      <span class="rm-icon fa-check-square-o"><%= l(:label_polls_voted_mark) %></span>
+      <%  if params[:answ].present? %>
+        (<%= params[:answ] == 'true' ? l(:general_text_yes) : l(:general_text_no) %>)
+      <% else %>
+        (<%= poll['answ'] == 1 ? l(:general_text_yes) : l(:general_text_no) %>)
+      <% end %>
+
+    <% else %>
+          <span id="vote_<%= poll.id %>" style="display: inline-block">
+            <%= link_to l(:button_polls_yes), { :action => 'vote', :id => poll[:id], :answ => true }, :method => :post, :class => 'vote yes in_link', remote: true %>
+            /
+            <%= link_to l(:button_polls_no), { :action => 'vote', :id => poll[:id], :answ => false }, :method => :post, :class => 'vote yes in_link', remote: true %>
+          </span>
+    <% end %>
+  </td>
+
+  <% if User.current.global_permission_to?(:manage_polls) %>
+    <td class="acl-table-buttons">
+
+      <%= link_to "<span> #{l(:button_edit)}</span>".html_safe,
+                  { :action => 'edit', :id => poll[:id] },
+                  :class => 'actions icon rm-icon fa-pencil in_link link_to_modal refreshable  click_out', remote: true %>
+      <%= link_to "<span> #{l(:button_delete)}</span>".html_safe,
+                  { :action => 'destroy', :id => poll[:id] },
+                  method: :delete,
+                  :class => 'actions in_link icon rm-icon fa-trash refreshable',
+                  remote: true,
+                  data: { confirm: l(:label_polls_destroy_confirmation) } %>
+    </td>
+  <% end %>
+</tr>

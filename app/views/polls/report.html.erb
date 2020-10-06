@@ -1,0 +1,30 @@
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'voting', :plugin => 'polls' %>
+<% end %>
+
+<%= link_to l(:button_polls), { action: 'index' }, class: 'rm-icon fa-arrow-left' %>
+<h1><%= l(:label_polls_report) %></h1>
+<%= form_tag url_for(controller: 'polls', action: 'report'), remote: true, method: :post do %>
+
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+  <%= select_tag( 'report_polls',
+                  options_for_select(@for_select, nil),
+                  {include_blank: true, class: 'select2_roles', id: 'report_polls_select'} ) %>
+
+  <%= submit_tag(l(:button_submit), id: 'report-submit', class: 'btn-def kpi_mark_submit_button actions in_link refreshable ') %>
+<% end %>
+
+<table class="list issue-report polls-report" id="polls_report_table" style="max-width: 640px;">
+  <thead>
+    <tr>
+      <th colspan="3" class="first-td"></th>
+      <th class="center-align"><%= l(:general_text_yes) %></th>
+      <th class="center-align"><%= l(:general_text_no) %></th>
+    </tr>
+  </thead>
+
+  <tbody id="poll_tree">
+      <%= render partial: 'report', locals: {polls: @polls} %>
+  </tbody>
+</table>

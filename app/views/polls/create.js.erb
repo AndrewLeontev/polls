@@ -1,0 +1,7 @@
+$('#errorExplanation').remove();
+$('.flash').remove();
+
+$('.modal_window').modal_window('hide');
+$('#poll-global').append('<%= j render(@poll) %>')
+
+$('#edit_poll_<%= @poll.id %>').effect('highlight', {}, 500)
